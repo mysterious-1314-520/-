@@ -255,7 +255,8 @@ $page_title = $site_title.(!empty($conf['title']) ? ' - '.$conf['title'] : '');
 <title><?php echo htmlspecialchars($page_title); ?></title>
 <meta name="keywords"    content="<?php echo htmlspecialchars($conf['keywords']); ?>">
 <meta name="description" content="<?php echo htmlspecialchars($conf['description']); ?>">
-<link rel="shortcut icon" href="favicon.ico">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="alternate icon" href="favicon.ico">
 <?php if($bg_mode=='default'){ ?>
 <link rel="preload" as="image" href="<?php echo htmlspecialchars($default_bg_webp); ?>" type="image/webp" fetchpriority="high">
 <?php } ?>
@@ -349,6 +350,19 @@ body{font-family:'Noto Sans SC',sans-serif;min-height:100vh;overflow-x:hidden;}
 .ping-badge.online{display:block;background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.18),0 0 16px rgba(34,197,94,.78)}
 .ping-badge.offline{display:block;background:#ef4444;box-shadow:0 0 0 3px rgba(239,68,68,.18),0 0 16px rgba(239,68,68,.76)}
 @keyframes pingBlink{0%,100%{opacity:.52}50%{opacity:1}}
+@media(max-width:768px){
+  .wrap{padding:0 16px 48px}
+  .hero{padding:12px 0 22px}
+  .bar{padding:8px 0 0}
+  .bar-btn{padding:7px 14px;font-size:.74rem}
+  .search{max-width:100%}
+  .sinp{padding:14px 14px;font-size:.9rem}
+  .sbtn{padding:0 20px;font-size:1.15rem}
+  .tags{gap:8px;margin-top:10px}
+  .tag{padding:6px 14px;font-size:.72rem}
+  .ad-grid{margin-top:12px;gap:8px}
+  .ad-cell,.ad-banner{height:72px;border-radius:14px}
+}
 @media(max-width:600px){
   .grid{grid-template-columns:repeat(2,1fr);gap:10px}
   .card{padding:12px 13px;gap:10px}
@@ -363,10 +377,165 @@ body{font-family:'Noto Sans SC',sans-serif;min-height:100vh;overflow-x:hidden;}
   .ping-badge.offline{box-shadow:0 0 0 2px rgba(239,68,68,.18),0 0 12px rgba(239,68,68,.72)}
   .ad-grid{margin-top:12px;gap:8px}
   .ad-cell,.ad-banner{height:78px;border-radius:14px}
+  .hero{padding:8px 0 18px}
+  .wrap{padding:0 12px 40px}
+  #date{font-size:.8rem;margin-bottom:18px}
+  .sec{margin-top:20px}
+  .sec-hd{margin-bottom:12px}
+  .sec-title{font-size:.82rem}
+  .foot{font-size:11px;padding:36px 0 16px}
+  .lkm-box{width:96%;max-width:none;border-radius:16px}
+  .lkm-hd{padding:16px 18px}
+  .lkm-hd h3{font-size:16px}
+  .lkm-bd{padding:18px}
+  .lkm-row input,.lkm-row select{padding:12px 14px;font-size:14px}
+}
+@media(max-width:480px){
+  html{font-size:15px}
+  body{min-height:100vh;min-height:100dvh}
+  .wrap{padding:0 10px 36px}
+  .hero{padding:6px 0 14px}
+  #clock{font-size:2.8rem}
+  #date{font-size:.75rem;margin-bottom:14px}
+  .search{border-radius:40px}
+  .eng{padding:0 6px}
+  .engine-current{min-width:60px;height:38px;padding:0 8px;font-size:.78rem;gap:4px}
+  .sinp{padding:12px 10px;font-size:.85rem}
+  .sbtn{padding:0 16px;font-size:1.05rem}
+  .grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .card{padding:10px 11px;gap:8px;border-radius:14px}
+  .ico{width:32px;height:32px;font-size:1rem;border-radius:10px}
+  .nm{font-size:.78rem}
+  .ds{font-size:10px;line-height:14px;height:14px}
+  .ad-grid{grid-template-columns:1fr;max-width:100%}
+  .ad-cell,.ad-banner{height:68px;border-radius:12px}
+  .sec{margin-top:16px}
+  .sec-hd{gap:8px;margin-bottom:10px}
+  .sec-title{font-size:.78rem}
+  .dot{width:7px;height:7px}
+  .tag{padding:5px 11px;font-size:.68rem}
+  .tags{gap:6px;margin-top:8px}
+  .bar{gap:8px;padding:6px 0 0}
+  .bar-btn{padding:6px 10px;font-size:.68rem}
+  .foot{font-size:10px;padding:30px 0 14px}
+  .music-btn{bottom:20px;left:16px;width:40px;height:40px;font-size:.9rem}
+  .music-panel{bottom:72px;left:16px;min-width:180px;padding:14px 16px;border-radius:14px}
+  .lkm-box{border-radius:14px}
+  .lkm-hd{padding:14px 16px}
+  .lkm-bd{padding:14px}
+  .lkm-hd h3{font-size:15px}
+  .lkm-submit{font-size:15px;padding:14px}
+  .lkm-close{font-size:24px;width:28px;height:28px}
+  .ping-badge{top:5px;right:5px;width:7px;height:7px}
+}
+@media(max-width:380px){
+  .grid{grid-template-columns:1fr}
+  .card{padding:10px 12px}
+  .ico{width:34px;height:34px}
+  .nm{font-size:.8rem}
+  .search{border-radius:36px}
+  .engine-current{min-width:0;width:auto;padding:0 6px;font-size:.72rem}
+  .engine-arrow{width:6px;height:6px}
+  .sinp{padding:11px 8px;font-size:.8rem}
+  .sbtn{padding:0 14px;font-size:.95rem}
+  #clock{font-size:2.2rem}
+  .wrap{padding:0 8px 30px}
+  .ad-cell,.ad-banner{height:60px}
+}
+@media(hover:none) and (pointer:coarse){
+  .card:hover{transform:none;box-shadow:0 10px 40px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.12)}
+  .card:active{background:rgba(0,0,0,.5);border-color:rgba(255,255,255,.3);transform:scale(.97)}
+  .bar-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.18)}
+  .bar-btn:active{background:rgba(255,255,255,.2)}
+  .sbtn:hover{background:rgba(255,255,255,.15)}
+  .sbtn:active{background:rgba(255,255,255,.32)}
+  .tag:hover{background:rgba(0,0,0,.3);border-color:rgba(255,255,255,.16);color:rgba(255,255,255,.7)}
+  .tag:active{background:rgba(0,0,0,.5);border-color:rgba(255,255,255,.3)}
 }
 @media(max-width:1500px){.ad-side{width:136px}.ad-side-right{right:16px}.ad-side-left{left:16px}}
 @media(max-width:1280px){.ad-side{width:92px;border-radius:14px}.ad-side-right{right:10px}.ad-side-left{left:10px}.ad-side .ad-img{max-height:220px}}
 @media(max-width:980px){.ad-side{display:none}}
+
+/* 平板横屏 & 小屏笔记本 (769-1199px) */
+@media(min-width:769px) and (max-width:1199px){
+  .wrap{max-width:960px;padding:0 20px 56px}
+  .hero{padding:20px 0 26px}
+  .search{max-width:620px}
+  .sinp{padding:15px 18px}
+  .grid{gap:12px}
+  .sec{margin-top:24px}
+  .ad-grid{max-width:820px}
+}
+/* 横屏优化 */
+@media(orientation:landscape) and (max-height:600px){
+  .hero{padding:4px 0 10px}
+  #clock{font-size:2.5rem}
+  #date{margin-top:4px;margin-bottom:10px}
+  .search{max-width:560px}
+  .sinp{padding:10px 14px;font-size:.82rem}
+  .sbtn{padding:0 16px}
+  .engine-current{height:34px;font-size:.78rem}
+  .tags{margin-top:6px;gap:6px}
+  .foot{padding:20px 0 10px}
+}
+/* Retina 高清屏微调 */
+@media(-webkit-min-device-pixel-ratio:2),(min-resolution:192dpi){
+  .card{box-shadow:0 10px 40px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.08)}
+  .card:hover{box-shadow:0 20px 56px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.15)}
+}
+/* iPhone 安全区域适配 */
+@supports(padding:max(0px)){
+  .wrap{padding-left:max(24px, env(safe-area-inset-left));padding-right:max(24px, env(safe-area-inset-right))}
+  .music-btn{left:max(28px, env(safe-area-inset-left))}
+  .music-panel{left:max(28px, env(safe-area-inset-left))}
+  .foot{padding-bottom:max(20px, env(safe-area-inset-bottom))}
+}
+
+/* PC端大屏适配 */
+@media(min-width:1200px){
+  .wrap{max-width:1140px}
+  .search{max-width:720px}
+  .sinp{padding:16px 22px;font-size:1rem}
+  .sbtn{padding:0 32px}
+  .engine-current{height:46px;font-size:.9rem}
+  .grid{grid-template-columns:<?php echo $columns=='auto'?'repeat(auto-fill, minmax(220px, 1fr))':$columns_css_default; ?>}
+}
+@media(min-width:1400px){
+  html{font-size:17pt}
+  .wrap{max-width:1280px;padding:0 32px 72px}
+  .search{max-width:800px}
+  .hero{padding:30px 0 44px}
+  #clock{font-size:clamp(4rem,10vw,7.5rem)}
+  #date{font-size:1rem;margin-bottom:30px}
+  .grid{grid-template-columns:<?php echo $columns=='auto'?'repeat(auto-fill, minmax(240px, 1fr))':$columns_css_default; ?>;gap:18px}
+  .card{padding:18px 20px;gap:16px}
+  .ico{width:48px;height:48px;font-size:1.3rem}
+  .nm{font-size:1.05rem}
+  .ds{font-size:14px;line-height:20px;height:20px}
+  .bar-btn{padding:10px 22px;font-size:.82rem}
+  .tag{padding:8px 20px;font-size:.8rem}
+  .ad-grid{max-width:1024px;gap:14px}
+  .ad-cell,.ad-banner{height:102px;border-radius:20px}
+  .sec{margin-top:36px}
+  .sec-hd{margin-bottom:20px}
+  .sec-title{font-size:1rem}
+  .foot{font-size:14px;padding:64px 0 28px}
+}
+@media(min-width:1800px){
+  .wrap{max-width:1440px;padding:0 48px 88px}
+  .search{max-width:880px}
+  .hero{padding:40px 0 56px}
+  .grid{grid-template-columns:<?php echo $columns=='auto'?'repeat(auto-fill, minmax(260px, 1fr))':$columns_css_default; ?>;gap:20px}
+  .card{padding:20px 24px;gap:18px}
+  .ico{width:52px;height:52px;border-radius:14px}
+  .nm{font-size:1.1rem}
+  .ad-grid{max-width:1140px;gap:16px}
+  .ad-cell,.ad-banner{height:114px;border-radius:22px}
+  .sec{margin-top:44px}
+  .sec-hd{margin-bottom:24px}
+  .foot{font-size:15px}
+  .ad-side{width:180px}.ad-side-right{right:32px}.ad-side-left{left:32px}
+}
 
 /* 友联弹窗 - 完全自实现，不依赖任何外部库 */
 #lkm-wrap{position:fixed;top:0;left:0;right:0;bottom:0;z-index:99999;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.8);backdrop-filter:blur(6px)}

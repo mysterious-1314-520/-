@@ -1,12 +1,12 @@
 <?php
 /* 祈福导航系统 V1.3 官方开源：https://gitee.com/qifuxitong/daohang */
 
-/* 数据库配置：首次上传后请访问 /install/，安装程序会自动写入这里 */
+/* 数据库配置 */
 $dbconfig=array(
-	'host' => '',
+	'host' => 'localhost',
 	'port' => 3306,
-	'user' => '',
-	'pwd' => '',
-	'dbname' => ''
+	'user' => 'root',
+	'pwd' => 'root_not_empty',
+	'dbname' => 'daohang'
 );
 ?>
