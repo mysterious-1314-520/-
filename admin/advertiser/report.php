@@ -1,0 +1,7 @@
+<?php define('IN_CRONLITE',true);define('SYSTEM_ROOT',dirname(__FILE__).'/');define('ROOT',dirname(dirname(SYSTEM_ROOT)).'/');require_once(ROOT.'includes/common.php');require_once(ROOT.'includes/auth.php');require_login();require_role('advertiser');$user_id=get_current_user_id();$advertiser=$DB->query("SELECT id FROM ad_advertisers WHERE user_id=$user_id")->fetch();$days=intval($_GET['days']??7);$stats=$DB->query("SELECT DATE(hour) as date,SUM(impressions) as imp,SUM(clicks) as clk,SUM(total_cost) as cost FROM ad_hourly_advertiser WHERE advertiser_id={$advertiser['id']} AND hour>=DATE_SUB(NOW(),INTERVAL $days DAY) GROUP BY DATE(hour) ORDER BY date ASC")->fetchAll();include(ROOT.'admin/admin.php');?>
+<div class="card"><div class="card-header"><h5><i class="fa fa-chart-bar"></i> 数据报表</h5></div><div class="card-body"><canvas id="reportChart" height="100"></canvas></div></div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script><script>
+new Chart(document.getElementById('reportChart').getContext('2d'),{
+type:'line',data:{labels:<?=json_encode(array_column($stats,'date'))?>,datasets:[{label:'展示',data:<?=json_encode(array_column($stats,'imp'))?>,borderColor:'#36a2eb'},{label:'点击',data:<?=json_encode(array_column($stats,'clk'))?>,borderColor:'#ff6384'},{label:'消耗',data:<?=json_encode(array_column($stats,'cost'))?>,borderColor:'#4bc0c0',yID:'y1'}]},options:{responsive:true,scales:{y:{type:'linear',position:'left'},y1:{type:'linear',position:'right',grid:{drawOnChartArea:false}}}}
+});
+</script>
