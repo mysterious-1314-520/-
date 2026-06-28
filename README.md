@@ -3,11 +3,11 @@
 <div align="center">
 
 **版本:** 1.5.0  
-**更新日期:** 2026-06-28  
+**发布日期:** 2026-06-28  
 **语言:** PHP 8.2+  
 **许可证:** MIT
 
-[功能特性](#功能特性) • [快速开始](#快速开始) • [文档](#文档) • [更新日志](CHANGELOG.md)
+[功能特性](#功能特性) • [快速开始](#快速开始) • [部署指南](DEPLOY.md) • [文档](#文档) • [更新日志](CHANGELOG.md)
 
 </div>
 
@@ -20,7 +20,7 @@
 ### 1. 祈福导航系统 (V1.3)
 一个美观、响应式的自建导航网站系统，支持站点管理、分类管理、友链申请等功能。
 
-### 2. 广告联盟系统 (V1.5.0 - 新增)
+### 2. 广告联盟系统 (V1.5.0 - 新增) 🎉
 完整的商业化广告投放平台，连接广告主与网站主，实现广告投放、计费结算、数据统计的全流程管理。
 
 ---
@@ -36,7 +36,7 @@
 - ✅ 背景设置
 - ✅ 响应式适配 (手机/平板/PC)
 
-### 广告联盟系统 (NEW 🎉)
+### 广告联盟系统 (NEW)
 
 #### 用户体系
 - ✅ 四角色权限 (admin/auditor/advertiser/publisher)
@@ -90,47 +90,47 @@
 
 ## 🚀 快速开始
 
-### 环境要求
-
-- PHP >= 8.2
-- MySQL 5.7+ / MariaDB 10.x
-- Redis (可选，用于缓存)
-- ClickHouse 20.x+ (可选，用于大数据分析)
-
-### 安装步骤
-
-1. **克隆项目**
-   ```bash
-   git clone https://github.com/mysterious-1314-520/-.git
-   cd -
-   ```
-
-2. **导入数据库**
-   ```bash
-   mysql -u root -e "CREATE DATABASE daohang DEFAULT CHARACTER SET utf8mb4"
-   mysql -u root daohang < install/install.sql
-   mysql -u root daohang < install/ad_network_schema.sql
-   ```
-
-3. **导入 ClickHouse 表 (可选)**
-   ```bash
-   clickhouse-client --database daohang < install/ad_network_clickhouse.sql
-   ```
-
-4. **配置数据库连接**
-   编辑 `config.php`，修改数据库配置
-
-5. **访问网站**
-   - 导航首页：`/`
-   - 导航后台：`/admin/`
-   - 广告联盟注册：`/admin/ad_register.php`
-   - 广告联盟登录：`/admin/ad_login.php`
-
-### Docker 部署 (规划中)
+### Docker 部署 (推荐)
 
 ```bash
+# 1. 克隆项目
+git clone https://github.com/mysterious-1314-520/-.git
+cd -
+
+# 2. 启动所有服务
 docker-compose up -d
+
+# 3. 访问网站
+# http://localhost
 ```
+
+### 手动部署
+
+```bash
+# 1. 导入数据库
+mysql -u root daohang < install/ad_network_schema.sql
+
+# 2. 配置数据库连接
+# 编辑 config.php
+
+# 3. 启动服务
+# PHP 内置服务器 (开发环境)
+php -S 0.0.0.0:8000
+
+# 或 Nginx + PHP-FPM (生产环境)
+# 详见 DEPLOY.md
+```
+
+### 环境要求
+
+| 组件 | 最低版本 | 推荐版本 |
+|------|----------|----------|
+| PHP | 8.0 | 8.2+ |
+| MySQL | 5.7 | 8.0+ |
+| MariaDB | 10.2 | 10.6+ |
+| Nginx | 1.14 | 1.22+ |
+
+**PHP 扩展:** `pdo_mysql` `mbstring` `curl` `gd` `json` `session`
 
 ---
 
@@ -156,7 +156,7 @@ docker-compose up -d
 │   │   └── ad-sdk.min.js      # 压缩版 SDK
 │   └── css/
 ├── includes/                   # 核心模块
-│   ├── auth.php               # 认证中间件
+│   ├── auth.php               # 认证模块
 │   ├── ad_engine.php          # 投放引擎
 │   └── version.php            # 版本信息
 ├── install/                    # 安装文件
@@ -166,7 +166,8 @@ docker-compose up -d
 ├── config.php                  # 数据库配置
 ├── index.php                   # 导航首页
 ├── README.md                   # 项目说明
-└── CHANGELOG.md                # 更新日志
+├── CHANGELOG.md                # 更新日志
+└── DEPLOY.md                   # 部署指南
 ```
 
 ---
@@ -178,6 +179,11 @@ docker-compose up -d
 - [设计文档](.monkeycode/specs/ad-network/design.md)
 - [实施任务](.monkeycode/specs/ad-network/tasklist.md)
 - [完成总结](.monkeycode/specs/ad-network/README.md)
+
+### 用户文档
+- [部署指南](DEPLOY.md) - 完整部署流程
+- [更新日志](CHANGELOG.md) - 版本历史
+- [配置说明](DEPLOY.md#配置说明) - 系统配置
 
 ### API 文档
 
@@ -200,15 +206,18 @@ Content-Type: application/json
 
 #### JS SDK 使用
 ```html
+<!-- 引入 SDK -->
 <script async src="/assets/js/ad-sdk.js" 
         data-pid="PUBLISHER_ID" 
         data-wid="WEBSITE_ID"></script>
+
+<!-- 广告位占位 -->
 <div data-ad="pos_xxxxxxx"></div>
 ```
 
 ---
 
-## 📊 数据统计
+## 📊 代码统计
 
 | 指标 | 数量 |
 |------|------|
@@ -223,13 +232,13 @@ Content-Type: application/json
 
 ## 🛠️ 技术栈
 
-- **后端**: PHP 8.2+
-- **数据库**: MySQL 8.0+ / MariaDB 10.x
-- **分析**: ClickHouse 20.x+
-- **缓存**: Redis
-- **前端**: jQuery + Bootstrap
-- **图表**: Chart.js 3.9.1
-- **SDK**: 原生 JavaScript
+- **后端:** PHP 8.2+
+- **数据库:** MySQL 8.0+ / MariaDB 10.x
+- **分析:** ClickHouse 20.x+
+- **缓存:** Redis
+- **前端:** jQuery + Bootstrap
+- **图表:** Chart.js 3.9.1
+- **SDK:** 原生 JavaScript
 
 ---
 
@@ -269,14 +278,15 @@ Content-Type: application/json
 
 ## 📞 联系方式
 
-- **项目地址**: https://github.com/mysterious-1314-520/-
-- **官方演示**: 待添加
+- **项目地址:** https://github.com/mysterious-1314-520/-
+- **Releases:** https://github.com/mysterious-1314-520/-/releases
+- **Issues:** https://github.com/mysterious-1314-520/-/issues
 
 ---
 
 <div align="center">
 
-**祈祈福导航系统 + 广告联盟系统** • 让导航更高效，让流量更有价值
+**祈福导航系统 + 广告联盟系统** • 让导航更高效，让流量更有价值
 
 Made with ❤️ by MonkeyCode-AI
 
