@@ -579,6 +579,7 @@ body{font-family:'Noto Sans SC',sans-serif;min-height:100vh;overflow-x:hidden;}
   <?php if($show_link_apply!='0'): ?>
   <nav class="bar">
     <div class="bar-actions">
+      <a class="bar-btn" href="admin/ad_register.php" target="_blank" rel="noopener">🚀 广告联盟</a>
       <button class="bar-btn" id="lkmBtn" type="button">🔗 提交友联</button>
     </div>
   </nav>
