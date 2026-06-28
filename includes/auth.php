@@ -7,6 +7,14 @@
 if(!defined('IN_CRONLITE')) exit;
 
 /**
+ * 获取系统目录 URL
+ * @return string
+ */
+function sysdir() {
+    return '/admin/';
+}
+
+/**
  * 检查用户是否已登录
  * @return bool
  */

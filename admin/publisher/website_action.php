@@ -4,8 +4,8 @@
  */
 
 define('IN_CRONLITE', true);
-define('SYSTEM_ROOT', dirname(__FILE__).'/');
-define('ROOT', dirname(dirname(SYSTEM_ROOT)).'/');
+define('SYSTEM_ROOT', '/workspace/includes/');
+define('ROOT', '/workspace/');
 
 require_once(ROOT.'includes/common.php');
 require_once(ROOT.'includes/auth.php');
@@ -24,10 +24,10 @@ try {
     }
     
     $user_id = get_current_user_id();
-    $publisher = $DB->query("SELECT id FROM ad_publishers WHERE user_id = $user_id")->fetch();
+    $publisher = $DB->fetch_result($DB->query("SELECT id FROM ad_publishers WHERE user_id = $user_id"));
     
     // 验证网站归属
-    $website = $DB->query("SELECT * FROM ad_publisher_websites WHERE id = $id AND publisher_id = {$publisher['id']}")->fetch();
+    $website = $DB->fetch_result($DB->query("SELECT * FROM ad_publisher_websites WHERE id = $id AND publisher_id = {$publisher['id']}"));
     if(!$website) {
         exit(json_encode(['code' => 1, 'msg' => '网站不存在或无权操作']));
     }

@@ -5,8 +5,8 @@
  */
 
 define('IN_CRONLITE', true);
-define('SYSTEM_ROOT', dirname(__FILE__).'/');
-define('ROOT', dirname(dirname(SYSTEM_ROOT)).'/');
+define('SYSTEM_ROOT', '/workspace/includes/');
+define('ROOT', '/workspace/');
 
 require_once(ROOT.'includes/common.php');
 require_once(ROOT.'includes/auth.php');
@@ -24,7 +24,7 @@ try {
     $advertiser = $stmt->fetch();
     
     // 获取账户余额
-    $account = $DB->query("SELECT * FROM ad_accounts WHERE user_id = $user_id")->fetch();
+    $account = $DB->fetch_result($DB->query("SELECT * FROM ad_accounts WHERE user_id = $user_id"));
     
     // 今日数据
     $today_start = date('Y-m-d 00:00:00');

@@ -5,8 +5,8 @@
  */
 
 define('IN_CRONLITE', true);
-define('SYSTEM_ROOT', dirname(__FILE__).'/');
-define('ROOT', dirname(dirname(SYSTEM_ROOT)).'/');
+define('SYSTEM_ROOT', '/workspace/includes/');
+define('ROOT', '/workspace/');
 
 require_once(ROOT.'includes/common.php');
 require_once(ROOT.'includes/auth.php');
@@ -20,7 +20,7 @@ $success = '';
 
 try {
     // 获取网站主 ID
-    $publisher = $DB->query("SELECT id FROM ad_publishers WHERE user_id = $user_id")->fetch();
+    $publisher = $DB->fetch_result($DB->query("SELECT id FROM ad_publishers WHERE user_id = $user_id"));
     
     // 处理表单提交
     if(isset($_POST['submit'])) {
@@ -46,7 +46,7 @@ try {
         }
         else {
             // 检查域名是否已存在
-            $exist = $DB->query("SELECT id FROM ad_publisher_websites WHERE domain = '$domain'")->fetch();
+            $exist = $DB->fetch_result($DB->query("SELECT id FROM ad_publisher_websites WHERE domain = '$domain'"));
             if($exist) {
                 $error = '该域名已被其他网站使用';
             }

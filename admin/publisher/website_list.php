@@ -5,8 +5,8 @@
  */
 
 define('IN_CRONLITE', true);
-define('SYSTEM_ROOT', dirname(__FILE__).'/');
-define('ROOT', dirname(dirname(SYSTEM_ROOT)).'/');
+define('SYSTEM_ROOT', '/workspace/includes/');
+define('ROOT', '/workspace/');
 
 require_once(ROOT.'includes/common.php');
 require_once(ROOT.'includes/auth.php');
@@ -18,7 +18,7 @@ $user_id = get_current_user_id();
 
 try {
     // 获取网站主 ID
-    $publisher = $DB->query("SELECT id FROM ad_publishers WHERE user_id = $user_id")->fetch();
+    $publisher = $DB->fetch_result($DB->query("SELECT id FROM ad_publishers WHERE user_id = $user_id"));
     $publisher_id = $publisher['id'];
     
     // 分页参数

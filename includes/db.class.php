@@ -58,6 +58,53 @@ if(defined('SQLITE')==true){
 	}
 }
 elseif(extension_loaded('mysqli') && $nomysqli==false) {
+    class DB_Statement {
+        private $stmt;
+        
+        public function __construct($stmt) {
+            $this->stmt = $stmt;
+        }
+        
+        public function execute($params = []) {
+            if(!empty($params)) {
+                $types = '';
+                $values = [];
+                foreach($params as $param) {
+                    if(is_int($param)) $types .= 'i';
+                    elseif(is_float($param)) $types .= 'd';
+                    else $types .= 's';
+                    $values[] = $param;
+                }
+                call_user_func_array([$this->stmt, 'bind_param'], array_merge([$types], $this->refValues($values)));
+            }
+            return $this->stmt->execute();
+        }
+        
+        public function fetch() {
+            $result = $this->stmt->get_result();
+            return $result ? $result->fetch_assoc() : false;
+        }
+        
+        public function fetchAll() {
+            $result = $this->stmt->get_result();
+            $rows = [];
+            if($result) {
+                while($row = $result->fetch_assoc()) {
+                    $rows[] = $row;
+                }
+            }
+            return $rows;
+        }
+        
+        private function refValues($arr) {
+            $refs = [];
+            foreach($arr as $key => $value) {
+                $refs[$key] = &$arr[$key];
+            }
+            return $refs;
+        }
+    }
+    
     class DB {
         var $link = null;
 
@@ -104,7 +151,13 @@ if(!mysqli_query($this->link,"set names 'utf8mb4'")) mysqli_query($this->link,"s
 			return $count ? $count[0] : 0;
 		}
 		function query($q){
-			return mysqli_query($this->link,$q);
+			$result = mysqli_query($this->link,$q);
+			$this->result = $result;
+			return $result;
+		}
+		function fetch_result($result = null){
+			if($result === null) $result = $this->result;
+			return $result ? mysqli_fetch_assoc($result) : false;
 		}
 		function escape($str){
 			return mysqli_real_escape_string($this->link,(string)$str);
@@ -116,6 +169,10 @@ if(!mysqli_query($this->link,"set names 'utf8mb4'")) mysqli_query($this->link,"s
 		}
 		function affected(){
 			return mysqli_affected_rows($this->link);
+		}
+		function prepare($sql) {
+			$stmt = mysqli_prepare($this->link, $sql);
+			return $stmt ? new DB_Statement($stmt) : false;
 		}
 		function insert_array($table,$array){
 			$values = array();
@@ -136,6 +193,9 @@ if(!mysqli_query($this->link,"set names 'utf8mb4'")) mysqli_query($this->link,"s
 		function close(){
 			$q = mysqli_close($this->link);
 			return $q;
+		}
+		function lastInsertId() {
+			return mysqli_insert_id($this->link);
 		}
 	}
 }
